@@ -42,7 +42,10 @@ public class EmailController {
 
             ownerHelper.setText(ownerHtmlContent, true);
 
-            FileSystemResource file = new FileSystemResource(new File("E:/Desktop/Proyectos/LaFloridita/LaFloridita - Back/src/main/resources/static/images/LogoFloriditaBordo.avif"));
+            String pathToImageOwner = "static/images/LogoFloriditaBordo.avif";
+
+
+            FileSystemResource file = new FileSystemResource(new File(pathToImageOwner));
             ownerHelper.addInline("floriditaLogoOwner", file);
             emailSender.send(ownerMessage);
 
@@ -70,7 +73,9 @@ public class EmailController {
 
             userHelper.setText(userHtmlContent, true);
 
-            FileSystemResource userFile = new FileSystemResource(new File("E:/Desktop/Proyectos/LaFloridita/LaFloridita - Back/src/main/resources/static/images/LogoFloriditaBordo.avif"));
+            String pathToImageUser = "static/images/LogoFloriditaBordo.avif";
+
+            FileSystemResource userFile = new FileSystemResource(new File(pathToImageUser));
             userHelper.addInline("floriditaLogo", userFile);
             emailSender.send(userMessage);
 
