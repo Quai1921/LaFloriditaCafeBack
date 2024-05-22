@@ -39,6 +39,10 @@ public class EmailConfig {
         mailSender.setJavaMailProperties(getMailProperties());
         mailSender.setUsername(email);
         mailSender.setPassword(password);
+
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+
         return mailSender;
     }
 
