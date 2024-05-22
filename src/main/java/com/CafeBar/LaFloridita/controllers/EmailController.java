@@ -1,34 +1,84 @@
 package com.CafeBar.LaFloridita.controllers;
 
-import com.CafeBar.LaFloridita.services.EmailService;
 import com.CafeBar.LaFloridita.dto.EmailDTO;
-import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 
 
 @RestController
 @RequestMapping("/api/lafloridita")
+@CrossOrigin(origins = "*")
 public class EmailController {
 
     @Autowired
-    private EmailService emailService;
+    private JavaMailSender emailSender;
 
 
     @PostMapping("/sendemail")
-    private ResponseEntity<String> sendEmail(@RequestBody EmailDTO emailDTO) throws MessagingException {
+    public String sendEmail(@RequestBody EmailDTO emailDTO) {
+
+        try {
+            MimeMessage ownerMessage = emailSender.createMimeMessage();
+            MimeMessageHelper ownerHelper = new MimeMessageHelper(ownerMessage, true);
+            ownerHelper.setTo("lafloriditacafe@gmail.com");
+            ownerHelper.setFrom("lafloriditacafe@gmail.com");
+            ownerHelper.setSubject("Formulario de Contacto. Mensaje de: " + emailDTO.firstName());
+
+            String ownerHtmlContent =
+                    "<div style='background-color: #f3f4f6; padding: 24px;'>" +
+                            "<div style='max-width: 480px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden;'>" +
+                            "<div style='padding: 24px;'>" +
+                             "<img src='cid:floriditaLogoOwner' alt='Logo La Floridita' style='display: block; margin: 0 auto; max-width: 200px; margin-bottom: 24px;'/>" +
+                            "<h2 style='font-size: 24px; font-weight: bold; color: #333333; margin-bottom: 16px; text-align: center;'>Mensaje enviado por: " + emailDTO.firstName() + "</h2>" +
+                            "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Email: " + emailDTO.email() + "</p>" +
+                            "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Mensaje: " + emailDTO.message() + "</p>" +
+                            "</div></div></div>";
+
+            ownerHelper.setText(ownerHtmlContent, true);
+
+            FileSystemResource file = new FileSystemResource(new File("E:/Desktop/Proyectos/LaFloridita/LaFloridita - Back/src/main/resources/static/images/LogoFloriditaBordo.avif"));
+            ownerHelper.addInline("floriditaLogoOwner", file);
+            emailSender.send(ownerMessage);
 
 
-        emailService.sendEmail(emailDTO);
-            return new ResponseEntity<>("Email enviado correctamente", HttpStatus.OK);
+
+
+            MimeMessage userMessage = emailSender.createMimeMessage();
+            MimeMessageHelper userHelper = new MimeMessageHelper(userMessage, true);
+            userHelper.setTo(emailDTO.email());
+            userHelper.setFrom("lafloriditacafe@gmail.com");
+            userHelper.setSubject(emailDTO.firstName() + ", gracias por contactarnos - La Floridita Café)");
+
+            String userHtmlContent =
+               "<div style='background-color: #f3f4f6; padding: 24px;'>" +
+                        "<div style='max-width: 480px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden;'>" +
+                        "<div style='padding: 24px;'>" +
+                        "<img src='cid:floriditaLogo' alt='Logo La Floridita' style='display: block; margin: 0 auto; max-width: 200px; margin-bottom: 24px;'/>" +
+                        "<h2 style='font-size: 24px; font-weight: bold; color: #333333; margin-bottom: 16px; text-align: center;'>Gracias por comunicarte con La Floridita Café Bar!</h2>" +
+                        "<p style='color: #666666; margin-bottom: 24px;'>Estimada/o, " + emailDTO.firstName() + ":</p>" +
+                        "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Hemos recibido tu consulta y nos pondremos en contacto lo antes posible. Valoramos tu paciencia y comprensión.</p>" +
+                        "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Si tenés alguna pregunta o inquietud urgente, no dudes en contactarnos directamente al <a href='tel:+354815636144'>(3548)15 63 6144</a>.</p>" +
+                        "<p style='color: #666666; margin-bottom: 24px;'>Desde ya muchas gracias, deseando que tengas una excelente jornada,</p>" +
+                        "<p style='font-weight: bold; color: #51280D;'>La Floridita Café Bar</p>" +
+                        "</div></div></div>";
+
+            userHelper.setText(userHtmlContent, true);
+
+            FileSystemResource userFile = new FileSystemResource(new File("E:/Desktop/Proyectos/LaFloridita/LaFloridita - Back/src/main/resources/static/images/LogoFloriditaBordo.avif"));
+            userHelper.addInline("floriditaLogo", userFile);
+            emailSender.send(userMessage);
+
+            return "Email enviado correctamente";
+        } catch (Exception e) {
+            return "Error in sending email " + e.getMessage();
+        }
     }
-
 
 }
 
@@ -87,6 +137,26 @@ public class EmailController {
 //    } catch (Exception e) {
 //        return "Error in sending email " + e.getMessage();
 //    }
+//}
+
+
+//@RestController
+//@RequestMapping("/api/lafloridita")
+//public class EmailController {
+//
+//    @Autowired
+//    private EmailService emailService;
+//
+//
+//    @PostMapping("/sendemail")
+//    private ResponseEntity<String> sendEmail(@RequestBody EmailDTO emailDTO) throws MessagingException {
+//
+//
+//        emailService.sendEmail(emailDTO);
+//        return new ResponseEntity<>("Email enviado correctamente", HttpStatus.OK);
+//    }
+//
+//
 //}
 
 

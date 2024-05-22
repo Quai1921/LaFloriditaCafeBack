@@ -2,7 +2,7 @@ FROM gradle:8.7.0-jdk17-alpine
 
 COPY . .
 
-RUN gradle build -x test
+RUN gradle build
 
 EXPOSE 8080
 
