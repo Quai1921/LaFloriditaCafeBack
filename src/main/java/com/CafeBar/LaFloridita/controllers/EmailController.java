@@ -34,7 +34,7 @@ public class EmailController {
                     "<div style='background-color: #f3f4f6; padding: 24px;'>" +
                             "<div style='max-width: 480px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden;'>" +
                             "<div style='padding: 24px;'>" +
-                             "<img src='cid:floriditaLogoOwner' alt='Logo La Floridita' style='display: block; margin: 0 auto; max-width: 200px; margin-bottom: 24px;'/>" +
+//                             "<img src='cid:floriditaLogoOwner' alt='Logo La Floridita' style='display: block; margin: 0 auto; max-width: 200px; margin-bottom: 24px;'/>" +
                             "<h2 style='font-size: 24px; font-weight: bold; color: #333333; margin-bottom: 16px; text-align: center;'>Mensaje enviado por: " + emailDTO.firstName() + "</h2>" +
                             "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Email: " + emailDTO.email() + "</p>" +
                             "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Mensaje: " + emailDTO.message() + "</p>" +
@@ -42,11 +42,11 @@ public class EmailController {
 
             ownerHelper.setText(ownerHtmlContent, true);
 
-            String pathToImageOwner = "static/images/LogoFloriditaBordo.avif";
+//            String pathToImageOwner = "static/images/LogoFloriditaBordo.avif";
 
 
-            FileSystemResource file = new FileSystemResource(new File(pathToImageOwner));
-            ownerHelper.addInline("floriditaLogoOwner", file);
+//            FileSystemResource file = new FileSystemResource(new File(pathToImageOwner));
+//            ownerHelper.addInline("floriditaLogoOwner", file);
             emailSender.send(ownerMessage);
 
 
@@ -62,7 +62,7 @@ public class EmailController {
                "<div style='background-color: #f3f4f6; padding: 24px;'>" +
                         "<div style='max-width: 480px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); overflow: hidden;'>" +
                         "<div style='padding: 24px;'>" +
-                        "<img src='cid:floriditaLogo' alt='Logo La Floridita' style='display: block; margin: 0 auto; max-width: 200px; margin-bottom: 24px;'/>" +
+//                        "<img src='cid:floriditaLogo' alt='Logo La Floridita' style='display: block; margin: 0 auto; max-width: 200px; margin-bottom: 24px;'/>" +
                         "<h2 style='font-size: 24px; font-weight: bold; color: #333333; margin-bottom: 16px; text-align: center;'>Gracias por comunicarte con La Floridita Café Bar!</h2>" +
                         "<p style='color: #666666; margin-bottom: 24px;'>Estimada/o, " + emailDTO.firstName() + ":</p>" +
                         "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Hemos recibido tu consulta y nos pondremos en contacto lo antes posible. Valoramos tu paciencia y comprensión.</p>" +
@@ -73,10 +73,10 @@ public class EmailController {
 
             userHelper.setText(userHtmlContent, true);
 
-            String pathToImageUser = "static/images/LogoFloriditaBordo.avif";
-
-            FileSystemResource userFile = new FileSystemResource(new File(pathToImageUser));
-            userHelper.addInline("floriditaLogo", userFile);
+//            String pathToImageUser = "static/images/LogoFloriditaBordo.avif";
+//
+//            FileSystemResource userFile = new FileSystemResource(new File(pathToImageUser));
+//            userHelper.addInline("floriditaLogo", userFile);
             emailSender.send(userMessage);
 
             return "Email enviado correctamente";
