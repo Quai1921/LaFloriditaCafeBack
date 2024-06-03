@@ -68,7 +68,7 @@ public class EmailController {
                         "<h2 style='font-size: 24px; font-weight: bold; color: #333333; margin-bottom: 16px; text-align: center;'>Gracias por comunicarte con La Floridita Café Bar!</h2>" +
                         "<p style='color: #666666; margin-bottom: 24px;'>Estimada/o, " + emailDTO.firstName() + ":</p>" +
                         "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Hemos recibido tu consulta y nos pondremos en contacto lo antes posible. Valoramos tu paciencia y comprensión.</p>" +
-                        "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Si tenés alguna pregunta o inquietud urgente, no dudes en contactarnos directamente al <a href='tel:+354815636144'>(3548)15 63 6144</a>.</p>" +
+                        "<p style='color: #666666; margin-bottom: 24px; text-align: justify;'>Si tenés alguna pregunta o inquietud urgente, no dudes en contactarnos directamente al <a href='tel:+3548549812'>3548 549812</a>.</p>" +
                         "<p style='color: #666666; margin-bottom: 24px;'>Desde ya muchas gracias, deseando que tengas una excelente jornada,</p>" +
                         "<p style='font-weight: bold; color: #51280D;'>La Floridita Café</p>" +
                         "</div></div></div>";
